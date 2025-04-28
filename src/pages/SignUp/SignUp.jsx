@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./SignUp.module.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../fireBaseConfig";
-
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   // declaring state variables
   const [formData, setFormData] = useState({
@@ -14,6 +14,10 @@ const SignUp = () => {
     terms: false,
   });
   const [error, setError] = useState(null);
+
+  //   for redirecting
+  const navigate = useNavigate();
+
   //   retriving input values
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +48,7 @@ const SignUp = () => {
         password
       );
       const user = userCredential.user;
+      navigate("/");
       console.log("user has been successfully created", user);
       setFormData({
         firstname: "",
@@ -126,7 +131,7 @@ const SignUp = () => {
             name="terms"
             id="terms"
             onChange={handleCheckboxChange}
-            value={formData.terms}
+            checked={formData.terms}
           />
           <label htmlFor="terms">agree to the terms and conditions:</label>
         </div>
